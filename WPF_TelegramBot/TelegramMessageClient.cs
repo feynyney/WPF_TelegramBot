@@ -26,7 +26,7 @@ namespace WPF_TelegramBot
 
         public ObservableCollection<MessageLog> BotMessageLog { get; set; }
 
-
+        //receives messages
         public TelegramMessageClient(MainWindow W)
         {
             this.BotMessageLog = new ObservableCollection<MessageLog>();
@@ -59,7 +59,7 @@ namespace WPF_TelegramBot
                    pollingErrorHandler: HandlePollingErrorAsync
                );
         }
-
+        
 
         
 
