@@ -50,7 +50,7 @@ namespace WPF_TelegramBot
                 {
                     BotMessageLog.Add(
                     new MessageLog(
-                        DateTime.Now.ToLongTimeString(), messageText.ToString()));
+                    DateTime.Now.ToLongTimeString(), messageText, message.Chat.FirstName, message.Chat.Id));
                 });
             }
 
@@ -60,9 +60,6 @@ namespace WPF_TelegramBot
                );
         }
         
-
-        
-
         public void SendMessage(string Text, string Id)
         {
             long id = Convert.ToInt64(Id);
