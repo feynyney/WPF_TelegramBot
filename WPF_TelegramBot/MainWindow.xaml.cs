@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace WPF_TelegramBot
     {
         TelegramMessageClient client;
 
+        List<string> BotMessages = new List<string>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,11 +32,20 @@ namespace WPF_TelegramBot
             client = new TelegramMessageClient(this);
 
             logList.ItemsSource = client.BotMessageLog;
+
         }
 
         private void btnMsgSendClick(object sender, RoutedEventArgs e)
         {
             client.SendMessage(txtMsgSend.Text, TargetSend.Text);
+            BotMessages.Add($"Bot says: {txtMsgSend.Text}");
+            client.JsonBotMsg($"Bot says: {txtMsgSend.Text}");
+            txtMsgSend.Clear();
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            btnMsgSend.IsEnabled = true;
         }
     }
 }

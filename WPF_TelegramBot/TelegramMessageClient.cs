@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using Telegram.Bot;
-using Telegram.Bot.Args;
 using Telegram.Bot.Exceptions;
-using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
 using System.Threading;
-
+using Newtonsoft.Json;
+using System.Text;
+using System.Collections.Generic;
 
 namespace WPF_TelegramBot
 {
@@ -25,6 +20,8 @@ namespace WPF_TelegramBot
         private MainWindow w;
 
         public ObservableCollection<MessageLog> BotMessageLog { get; set; }
+
+        public ObservableCollection<string> BotMessages { get; set; }
 
         //receives messages
         public TelegramMessageClient(MainWindow W)
@@ -40,7 +37,7 @@ namespace WPF_TelegramBot
                 Console.WriteLine("---");
                 Debug.WriteLine("+++---");
 
-                string text = $"{DateTime.Now.ToLongTimeString()}: {message.Chat.FirstName} {message.Chat.Id} {message.Text}";
+                string text = $"Date: {DateTime.Now.ToLongTimeString()}: Name: {message.Chat.FirstName} Chat Id: {message.Chat.Id} Message: {message.Text}";
 
                 Debug.WriteLine($"{text} TypeMessage: {message.Type.ToString()}");
 
@@ -52,6 +49,10 @@ namespace WPF_TelegramBot
                     new MessageLog(
                     DateTime.Now.ToLongTimeString(), messageText, message.Chat.FirstName, message.Chat.Id));
                 });
+
+                    string jsonChat = JsonConvert.SerializeObject(text);
+
+                    System.IO.File.AppendAllText("_chat.json", jsonChat + "\n");
             }
 
             _botClient.StartReceiving(
@@ -64,6 +65,13 @@ namespace WPF_TelegramBot
         {
             long id = Convert.ToInt64(Id);
             _botClient.SendTextMessageAsync(id, Text);
+        }
+
+        public void JsonBotMsg(string Text)
+        {
+            string jsonBot = JsonConvert.SerializeObject(Text);
+
+            System.IO.File.AppendAllText("_chat.json", jsonBot + "\n");
         }
 
         Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)

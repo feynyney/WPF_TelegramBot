@@ -22,7 +22,7 @@
                  >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Black" Margin="5" BorderThickness="1" CornerRadius="10">
+                    <Border BorderBrush="Black" Margin="10" BorderThickness="1" CornerRadius="10" MouseDown="Border_MouseDown">
                         <StackPanel Margin="10">
                             <TextBlock Text="{Binding FirstName}" Margin="0" FontSize="15"/>
                             <TextBlock Text="{Binding Msg}" Margin="0" FontSize="20"/>
@@ -43,12 +43,15 @@
             <StackPanel>
                 <TextBlock x:Name="TargetSend" 
                            Text="{Binding ElementName=logList, Path=SelectedItem.Id}"
-                           Visibility="Collapsed"
+                           FontSize="20"
+                           Visibility="Visible"
                            Margin="5"/>
 
                 <TextBox x:Name="txtMsgSend" FontSize="20" Margin="5"/>
 
-                <Button x:Name="btnMsgSend" FontSize="20" Content="Отправить" Margin="5" Click="btnMsgSendClick"/>
+                <Button x:Name="btnMsgSend" FontSize="20" Content="Отправить" Margin="5" Click="btnMsgSendClick" IsEnabled="False"/>
+
+                <TextBlock x:Name="txtTipToButton" FontSize="12" Margin="5" Text="Choose user to send message" FontWeight="Thin"/>
             </StackPanel>
         </GroupBox>
     </Grid>
