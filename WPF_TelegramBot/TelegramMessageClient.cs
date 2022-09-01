@@ -10,6 +10,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using System.Text;
 using System.Collections.Generic;
+using Telegram.Bot.Types.Enums;
 
 namespace WPF_TelegramBot
 {
@@ -21,7 +22,6 @@ namespace WPF_TelegramBot
 
         public ObservableCollection<MessageLog> BotMessageLog { get; set; }
 
-        public ObservableCollection<string> BotMessages { get; set; }
 
         //receives messages
         public TelegramMessageClient(MainWindow W)
@@ -43,16 +43,54 @@ namespace WPF_TelegramBot
 
                 var messageText = message.Text;
 
-                w.Dispatcher.Invoke(() =>
+                switch(message.Type)
                 {
-                    BotMessageLog.Add(
-                    new MessageLog(
-                    DateTime.Now.ToLongTimeString(), messageText, message.Chat.FirstName, message.Chat.Id));
-                });
+                    case MessageType.Sticker: 
+                        {
+                            w.Dispatcher.Invoke(() =>
+                            {
+                                BotMessageLog.Add(
+                                new MessageLog(
+                                DateTime.Now.ToLongTimeString(), "*Sticker*", message.Chat.FirstName, message.Chat.Id));
+                            });
 
+                            text = $"Date: {DateTime.Now.ToLongTimeString()}: Name: {message.Chat.FirstName} Chat Id: {message.Chat.Id} Message: *Sticker*";
+
+                            break;
+                        }
+
+                    case MessageType.Document:
+                        {
+                            w.Dispatcher.Invoke(() =>
+                            {
+                                BotMessageLog.Add(
+                                new MessageLog(
+                                DateTime.Now.ToLongTimeString(), "*Document*", message.Chat.FirstName, message.Chat.Id));
+                            });
+
+                            text = $"Date: {DateTime.Now.ToLongTimeString()}: Name: {message.Chat.FirstName} Chat Id: {message.Chat.Id} Message: *Document*";
+
+                            break;
+                        }
+
+                    default:
+                        {
+                            w.Dispatcher.Invoke(() =>
+                            {
+                                BotMessageLog.Add(
+                                new MessageLog(
+                                DateTime.Now.ToLongTimeString(), messageText, message.Chat.FirstName, message.Chat.Id));
+                            });
+
+                            break;
+                        }
+
+                }
+                
                     string jsonChat = JsonConvert.SerializeObject(text);
 
                     System.IO.File.AppendAllText("_chat.json", jsonChat + "\n");
+
             }
 
             _botClient.StartReceiving(

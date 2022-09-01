@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.Bot.Types;
 
 namespace WPF_TelegramBot
 {
@@ -17,6 +18,7 @@ namespace WPF_TelegramBot
 
         public string FirstName { get; set; }
 
+
         public MessageLog(string Time, string Msg, string FirstName, long Id)
         {
             this.Time = Time;
@@ -24,6 +26,9 @@ namespace WPF_TelegramBot
             this.FirstName = FirstName;
             this.Id = Id;
         }
+
+
+
 
         //public override string ToString()
         //{

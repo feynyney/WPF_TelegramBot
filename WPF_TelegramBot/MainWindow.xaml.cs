@@ -25,6 +25,10 @@ namespace WPF_TelegramBot
 
         List<string> BotMessages = new List<string>();
 
+
+
+        DateTime TimeOfMsg = DateTime.Now;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -39,7 +43,7 @@ namespace WPF_TelegramBot
         {
             client.SendMessage(txtMsgSend.Text, TargetSend.Text);
             BotMessages.Add($"Bot says: {txtMsgSend.Text}");
-            client.JsonBotMsg($"Bot says: {txtMsgSend.Text}");
+            client.JsonBotMsg($"Date: {TimeOfMsg} Bot says: {txtMsgSend.Text}");
             txtMsgSend.Clear();
         }
 
