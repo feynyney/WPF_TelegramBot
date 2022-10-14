@@ -7,7 +7,7 @@ using Telegram.Bot.Types;
 
 namespace WPF_TelegramBot
 {
-    struct MessageLog
+    public struct MessageLog
     {
         
         public string Time { get; set; }

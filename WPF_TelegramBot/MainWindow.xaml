@@ -5,35 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_TelegramBot"
         mc:Ignorable="d"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" Height="450" Width="800">
-    
+
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-
-
         <ListBox x:Name="logList" 
                  Grid.Column="0"
                  HorizontalAlignment="Stretch" 
                  Margin="5" 
-                 VerticalAlignment="Stretch" 
+                 VerticalAlignment="Stretch"
+                 Background="DeepSkyBlue"
+                 BorderThickness="5"
+                 BorderBrush="DodgerBlue"
                  >
+           
             <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="Black" Margin="10" BorderThickness="1" CornerRadius="10" MouseDown="Border_MouseDown">
-                        <StackPanel Margin="10">
+                <DataTemplate x:Name="SenderTemplate">
+                    <Border BorderBrush="DodgerBlue" Margin="10" BorderThickness="1" CornerRadius="10" MouseDown="Border_MouseDown">
+                        <StackPanel Margin="10" MaxWidth="200">
                             <TextBlock Text="{Binding FirstName}" Margin="0" FontSize="15"/>
-                            <TextBlock Text="{Binding Msg}" Margin="0" FontSize="20"/>
+                            <TextBlock Text="{Binding Msg}" Margin="0" FontSize="15" TextWrapping="Wrap"/>
                             <TextBlock Text="{Binding Time}" Margin="10 0" FontSize="10" Foreground="Gray" TextAlignment="Right"/>
                         </StackPanel>
                     </Border>
@@ -46,9 +41,11 @@
                   Header="Отправка сообщения"
                   HorizontalAlignment="Stretch" 
                   Margin="5"
-                  VerticalAlignment="Stretch" 
+                  VerticalAlignment="Stretch"
+                  BorderThickness="3"
+                  BorderBrush="DodgerBlue"
                   >
-            <StackPanel>
+            <StackPanel Background="DeepSkyBlue">
                 <TextBlock x:Name="TargetSend" 
                            Text="{Binding ElementName=logList, Path=SelectedItem.Id}"
                            FontSize="20"
@@ -57,7 +54,13 @@
 
                 <TextBox x:Name="txtMsgSend" FontSize="20" Margin="5"/>
 
-                <Button x:Name="btnMsgSend" FontSize="20" Content="Отправить" Margin="5" Click="btnMsgSendClick" IsEnabled="False"/>
+                <Button x:Name="btnMsgSend" FontStyle="Oblique" Background="DeepSkyBlue" Foreground="DodgerBlue" FontSize="20" Content="Отправить" Margin="5" Click="btnMsgSendClick" IsEnabled="False">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="15"></Setter>
+                        </Style>
+                    </Button.Resources>
+                </Button>
 
                 <TextBlock x:Name="txtTipToButton" FontSize="12" Margin="5" Text="Choose user to send message" FontWeight="Thin"/>
             </StackPanel>
